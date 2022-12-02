@@ -22,8 +22,10 @@ else
     fclose( fid );
 end
 
+Cfg.initioport = 1;
 Cfg.filenamebase = sprintf( '%02d_demo', subj );
 Cfg.subj = subj;
+
 demo_block( Cfg, Tobii )
 
 end

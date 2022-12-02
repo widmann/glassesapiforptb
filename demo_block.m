@@ -4,7 +4,9 @@ function demo_block( Cfg, Tobii )
 % Author: Andreas Widmann, widmann@uni-leipzig.de
 
 % Init screen, audio device, serial port, etc.
-Cfg.porthandle = IOPort( 'OpenSerialPort', '/dev/ttyUSB0', 'FlowControl=None,BaudRate=300' );
+if isfield( Cfg, 'initioport' ) && Cfg.initioport
+    Cfg.porthandle = IOPort( 'OpenSerialPort', '/dev/ttyUSB0', 'FlowControl=None,BaudRate=300' );
+end
 
 % Calibrate eyetracker
 Tobii = tobiiGlassesAPI( Tobii, 'calibration' );
@@ -57,6 +59,8 @@ Tobii = tobiiGlassesAPI( Tobii, 'recstop' );
 dlmwrite( fullfile( 'log', [ Cfg.filenamebase '.txt' ] ), trialArray, 'delimiter', '\t', 'precision', '%g' );
 
 % Close screen, audio device, serial port, etc.
-IOPort( 'CloseAll' );
+if isfield( Cfg, 'initioport' ) && Cfg.initioport
+    IOPort( 'CloseAll' );
+end
 
 end
